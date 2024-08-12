@@ -99,5 +99,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
             </form>
         </section>
+       
     );
 }

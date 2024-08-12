@@ -24,7 +24,11 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
-
+            <a href="#" className="flex items-center justify-center space-x-3 rtl:space-x-reverse">
+                                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-cyan-300">
+                                        SummerSplash
+                                    </span>
+                                </a>
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
@@ -94,17 +98,19 @@ export default function Register() {
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex flex-col mt-4">
+
+                    <PrimaryButton disabled={processing}>
+                        Register
+                    </PrimaryButton>
+                    
                     <Link
+                       class="mt-3 text-sm font-extrabold text-gray-600"
                         href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        
                     >
                         Already registered?
                     </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>

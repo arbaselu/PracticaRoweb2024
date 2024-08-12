@@ -18,10 +18,14 @@ export default function ForgotPassword({ status }) {
     return (
         <GuestLayout>
             <Head title="Forgot Password" />
-
+            <a href="#" className="flex items-center justify-center space-x-3 rtl:space-x-reverse">
+                                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-cyan-300">
+                                        SummerSplash
+                                    </span>
+                                </a>
+                   
             <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email address and we will email you a password
-                reset link that will allow you to choose a new one.
+                Forgot your password? Enter your email to reset the password.
             </div>
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
@@ -31,6 +35,7 @@ export default function ForgotPassword({ status }) {
                     id="email"
                     type="email"
                     name="email"
+                    placeholder="Your email here..."
                     value={data.email}
                     className="mt-1 block w-full"
                     isFocused={true}
@@ -39,9 +44,9 @@ export default function ForgotPassword({ status }) {
 
                 <InputError message={errors.email} className="mt-2" />
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-center mt-4">
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
+                        Send me the Reset Link
                     </PrimaryButton>
                 </div>
             </form>

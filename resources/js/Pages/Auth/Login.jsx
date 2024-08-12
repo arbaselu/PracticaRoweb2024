@@ -22,10 +22,16 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
+  
         <GuestLayout>
             <Head title="Log in" />
-
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            <a href="#" className="flex items-center justify-center space-x-3 rtl:space-x-reverse">
+                                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-cyan-300">
+                                        SummerSplash
+                                    </span>
+                                </a>
+                   
+            
 
             <form onSubmit={submit}>
                 <div>
@@ -61,6 +67,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
+                <div class="flex justify-between m-2">
                 <div className="block mt-4">
                     <label className="flex items-center">
                         <Checkbox
@@ -72,21 +79,28 @@ export default function Login({ status, canResetPassword }) {
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
+                <div>
+                    <span class="ms-2 text-sm font-extrabold text-gray-600">
+                        <Link href={route('password.request')}>Forgot Password?</Link></span>
+                </div>
+                </div>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                       <div class="flex mt-4 items-center justify-center">
+                    <PrimaryButton className="w-full flex" disabled={processing}>
                         Log in
                     </PrimaryButton>
-                </div>
+               </div>
+                
+               {status && <div className="mt-3 text-center font-medium text-sm text-green-600">{status}</div>}
+
+               <div class="flex mt-4">
+                    <span class="ms-2 text-sm text-gray-600">Don't have an account?
+                         <Link class="text-sm font-extrabold" href={route('register')}>Sign up</Link></span>
+               </div>
             </form>
+         
         </GuestLayout>
+       
     );
 }
+

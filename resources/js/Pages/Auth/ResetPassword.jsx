@@ -24,7 +24,11 @@ export default function ResetPassword({ token, email }) {
     return (
         <GuestLayout>
             <Head title="Reset Password" />
-
+            <a href="#" className="flex items-center justify-center space-x-3 rtl:space-x-reverse">
+                                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-cyan-300">
+                                        SummerSplash
+                                    </span>
+                                </a>
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
@@ -75,7 +79,7 @@ export default function ResetPassword({ token, email }) {
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-center mt-4">
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Reset Password
                     </PrimaryButton>
