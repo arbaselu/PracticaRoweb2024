@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ user, children }) {
     const [showingSidebar, setShowingSidebar] = useState(true);
 
     return (
@@ -41,13 +41,6 @@ export default function Authenticated({ user, header, children }) {
                         </button>
                     </div>
 
-                    {/* User Info */}
-                    <div className="flex flex-col items-center justify-center mt-4 px-4">
-                        <span className="text-lg font-semibold text-gray-700">
-                            {user.name}
-                        </span>
-                    </div>
-
                     {/* Navigation Links */}
                     <nav className="flex-1 px-4 py-4">
                         <ul className="space-y-4">
@@ -61,6 +54,18 @@ export default function Authenticated({ user, header, children }) {
                                     }`}
                                 >
                                     Dashboard
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href={route('categories.list')}
+                                    className={`block text-black text-center ${
+                                        route().current('categories.list')
+                                            ? 'bg-cyan-300 font-bold'
+                                            : ''
+                                    }`}
+                                >
+                                    Categories
                                 </Link>
                             </li>
                             <li>
@@ -122,4 +127,3 @@ export default function Authenticated({ user, header, children }) {
         </div>
     );
 }
-
