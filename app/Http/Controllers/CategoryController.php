@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
@@ -35,10 +34,30 @@ class CategoryController extends Controller
         return redirect()->route('categories.list')->with(['success' => 'Category saved.']);
     }
 
-    public function delete(Category $category)
-    {
-        $category->delete();
 
-        return redirect()->route('categories.list')->with(['success' => 'Category deleted.']);
-    }
+        public function delete(Category $category)
+        {
+       
+            foreach ($category->products as $product) {
+               
+                foreach ($product->images as $image) {
+                 
+                    if (Storage::disk('public')->exists($image->path)) {
+                        Storage::disk('public')->delete($image->path);
+                    }
+              
+                    $image->delete();
+                }
+             
+                $product->delete();
+            }
+   
+            $category->delete();
+    
+            return redirect()->route('categories.list')->with('success', 'Category and all associated products and images deleted successfully.');
+        }
+    
+    
+    
+    
 }

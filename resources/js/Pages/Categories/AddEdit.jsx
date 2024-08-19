@@ -1,13 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import InputLabel from "@/Components/InputLabel.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import {Transition} from "@headlessui/react";
+import { Transition } from "@headlessui/react";
 
-export default function AddEdit({category}) {
-    const {data, setData, post, errors, processing} = useForm({
+export default function AddEdit({ category }) {
+    const { data, setData, post, errors, processing } = useForm({
         name: category?.name || '',
         order: category?.order || '',
     });
@@ -19,51 +19,49 @@ export default function AddEdit({category}) {
         post(categoryRoute);
     };
 
-
     return (
         <AuthenticatedLayout>
-            <Head title={category ? 'Edit category' : 'Add category'}/>
-            <div>
-                <div className="py-4 px-4">
-                    <div className={'text-xl font-bold'}>{category ? 'Edit category' : 'Add category'}</div>
+            <Head title={category ? 'Edit category' : 'Add category'} />
+            <div className="max-w-3xl mx-auto py-8 px-6">
+                <div className="bg-white shadow rounded-lg p-6">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-6">{category ? 'Edit category' : 'Add category'}</h2>
 
-                    <div className="mt-6">
-                        <form onSubmit={submit} className="mt-6 space-y-6">
-                            <div>
-                                <InputLabel htmlFor="name" value="Name"/>
+                    <form onSubmit={submit} className="space-y-6">
+                        <div>
+                            <InputLabel htmlFor="name" value="Name" className="text-gray-700 font-medium" />
+                            <TextInput
+                                id="name"
+                                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                value={data.name}
+                                onChange={(e) => setData('name', e.target.value)}
+                                required
+                                isFocused
+                            />
+                            <InputError className="mt-2 text-red-600" message={errors.name} />
+                        </div>
 
-                                <TextInput
-                                    id="name"
-                                    className="mt-1 block w-full"
-                                    value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    required
-                                    isFocused
-                                />
+                        <div>
+                            <InputLabel htmlFor="order" value="Order" className="text-gray-700 font-medium" />
+                            <TextInput
+                                id="order"
+                                type="number"
+                                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                value={data.order}
+                                onChange={(e) => setData('order', e.target.value)}
+                                required
+                            />
+                            <InputError className="mt-2 text-red-600" message={errors.order} />
+                        </div>
 
-                                <InputError className="mt-2" message={errors.name}/>
-                            </div>
-
-                            <div>
-                                <InputLabel htmlFor="order" value="Order"/>
-
-                                <TextInput
-                                    id="order"
-                                    type="number"
-                                    className="mt-1 block w-full"
-                                    value={data.order}
-                                    onChange={(e) => setData('order', e.target.value)}
-                                    required
-                                />
-
-                                <InputError className="mt-2" message={errors.order}/>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <PrimaryButton disabled={processing}>Save</PrimaryButton>
-                            </div>
-                        </form>
-                    </div>
+                        <div className="flex justify-end">
+                            <PrimaryButton
+                                disabled={processing}
+                                className="bg-gray-700 text-white px-4 py-2 hover:bg-gray-800 rounded-md"
+                            >
+                                Save
+                            </PrimaryButton>
+                        </div>
+                    </form>
                 </div>
             </div>
         </AuthenticatedLayout>
