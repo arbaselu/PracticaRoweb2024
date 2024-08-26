@@ -9,6 +9,11 @@ export default function List({ categories }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState(null);
 
+    // State-uri pentru paginare și căutare
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 9;
+    const [searchTerm, setSearchTerm] = useState('');
+
     const handleDelete = (id) => {
         setCategoryToDelete(id);
         setIsModalOpen(true);
@@ -18,6 +23,22 @@ export default function List({ categories }) {
         deleteCategory(route('categories.delete', categoryToDelete));
         setIsModalOpen(false);
     };
+
+    // Funcții de căutare
+    const searchByName = (categories, searchTerm) => {
+        return categories.filter(category =>
+            category.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    };
+
+    const filteredCategories = searchByName(categories, searchTerm);
+
+    // Logica de paginare
+    const totalPages = Math.ceil(filteredCategories.length / itemsPerPage);
+    const currentCategories = filteredCategories.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     return (
         <AuthenticatedLayout>
@@ -31,6 +52,17 @@ export default function List({ categories }) {
                         </Link>
                     </div>
 
+                    {/* Filtru de căutare */}
+                    <div className="flex space-x-4 mb-4">
+                        <input
+                            type="text"
+                            placeholder="Search categories..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="p-2 border border-gray-300 rounded-lg w-1/3"
+                        />
+                    </div>
+
                     <div className="bg-white shadow rounded-lg overflow-hidden">
                         <table className="min-w-full bg-white">
                             <thead>
@@ -42,7 +74,7 @@ export default function List({ categories }) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {categories.map((category, index) => (
+                                {currentCategories.map((category, index) => (
                                     <tr key={index}>
                                         <td className="py-2 px-4 text-gray-700">{category.id}</td>
                                         <td className="py-2 px-4 text-gray-700">{category.name}</td>
@@ -64,11 +96,38 @@ export default function List({ categories }) {
                         </table>
                     </div>
 
+                    {/* Paginare */}
+                    <div className="flex justify-center items-center space-x-4 py-4">
+                        <button
+                            className={`rounded-full p-3 ${currentPage === 1 ? 'bg-gray-300' : 'bg-cyan-400'} text-white hover:bg-cyan-500 transition duration-300`}
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        >
+                            &#60;
+                        </button>
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index}
+                                className={`rounded-full p-3 ${currentPage === index + 1 ? 'bg-blue-500' : 'bg-cyan-400'} text-white hover:bg-cyan-500 transition duration-300`}
+                                onClick={() => setCurrentPage(index + 1)}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        <button
+                            className={`rounded-full p-3 ${currentPage === totalPages ? 'bg-gray-300' : 'bg-cyan-400'} text-white hover:bg-cyan-500 transition duration-300`}
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        >
+                            &#62;
+                        </button>
+                    </div>
+
                     {isModalOpen && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white p-6 rounded shadow-md">
-                                <h2 className="text-xl font-bold mb-4">Confirm Delete</h2>
-                                <p className="mb-4">Are you sure you want to delete this category? This action cannot be undone.</p>
+                                <h2 className="text-xl text-black font-bold mb-4">Confirm Delete</h2>
+                                <p className="mb-4 text-black">Are you sure you want to delete this category? This action cannot be undone.</p>
                                 <div className="flex justify-end space-x-2">
                                     <button
                                         className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"

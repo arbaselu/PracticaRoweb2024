@@ -10,7 +10,7 @@ export default function Authenticated({ user, children }) {
             <aside
                 className={`fixed top-0 left-0 h-full w-64 bg-gray-800 shadow-lg transform ${
                     showingSidebar ? 'translate-x-0' : '-translate-x-full'
-                } transition-transform duration-200 ease-in-out z-30`}
+                } transition-transform duration-200 ease-in-out`}
             >
                 <div className="flex flex-col min-h-screen">
                     <div className="flex items-center justify-between h-16 px-4 bg-cyan-300">
@@ -56,6 +56,20 @@ export default function Authenticated({ user, children }) {
                                     Dashboard
                                 </Link>
                             </li>
+
+                            <li>
+                                <Link
+                                    href={route('home.edit')}
+                                    className={`block py-2 px-4 rounded text-center ${
+                                        route().current('home.edit')
+                                            ? 'bg-cyan-500 font-bold'
+                                            : 'hover:bg-gray-700'
+                                    }`}
+                                >
+                                 Home Management
+                                </Link>
+                            </li>
+
                             <li>
                                 <Link
                                     href={route('categories.list')}

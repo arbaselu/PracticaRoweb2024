@@ -3,14 +3,9 @@ import { Link } from '@inertiajs/react';
 
 export default function Navbar({ auth }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  
     const handleToggle = () => {
         setIsMenuOpen(prevState => !prevState);
-    };
-
-    const handleDropdownToggle = () => {
-        setIsDropdownOpen(prevState => !prevState);
     };
 
     return (
@@ -49,81 +44,40 @@ export default function Navbar({ auth }) {
                         </button>
                         <div
                             id="navbar-default"
-                            className={`absolute top-full left-0 right-0 md:static md:block md:w-auto ${isMenuOpen ? 'block' : 'hidden'}`}
-                            style={{ zIndex: 1000 }} 
+                            className={` top-full left-0 right-0 bg-gray-800 ${isMenuOpen ? 'block absolute' : 'hidden'} md:block transition duration-300 ease-in-out z-50`}
                         >
-                            <ul className="font-extrabold flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse bg-gray-800 border-2 border-t-0 md:border-0">
+                            <ul className="font-extrabold flex flex-col p-4 md:p-0 md:flex-row md:space-x-8 rtl:space-x-reverse bg-gray-800 border-2 border-t-0 md:border-0">
                                 <li>
                                     <Link
-                                        href="#"
+                                        href="#home"
                                         className="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-cyan-300 md:p-0"
-                                        aria-current="page"
                                     >
                                         Home
                                     </Link>
                                 </li>
                                 <li>
                                     <a
-                                        href="#"
+                                        href="#about"
                                         className="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-cyan-300 md:p-0"
                                     >
                                         About
                                     </a>
                                 </li>
-                                <li className="relative">
-                                    <button
-                                        onClick={handleDropdownToggle}
-                                        className="flex items-center pl-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-cyan-300 md:p-0"
-                                    >
-                                        Category
-                                        <svg
-                                            className="ms-2 mt-1 -me-0.5 h-4 w-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </button>
-                                    {isDropdownOpen && (
-                                        <ul className="absolute w-40 py-2 text-center z-50 bg-gray-900 shadow-md mt-4 ">
-                                            <li>
-                                                <a href="#" className="block py-2 text-white hover:bg-gray-700 ">
-                                                    Category 1
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" className="block py-2 text-white hover:bg-gray-700">
-                                                    Category 2
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" className="block py-2 text-white hover:bg-gray-700">
-                                                    Category 3
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    )}
-                                </li>
                                 <li>
                                     <Link
-                                        href="#"
+                                        href="#category"
                                         className="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-cyan-300 md:p-0"
                                     >
-                                        Services
+                                        Category
                                     </Link>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#"
+                                    <Link
+                                        href="#contact"
                                         className="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-cyan-300 md:p-0"
                                     >
                                         Contact
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
                                     {auth.user ? (

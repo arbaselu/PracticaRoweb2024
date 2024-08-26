@@ -6,7 +6,7 @@ import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import { useState } from 'react';
 
-export default function AddEdit({ product }) {
+export default function AddEdit({ product, categories }) {
     const { data, setData, post, errors, processing } = useForm({
         name: product?.name || '',
         price: product?.price || '',
@@ -26,13 +26,22 @@ export default function AddEdit({ product }) {
     const submit = (e) => {
         e.preventDefault();
 
-        let productRoute = product ? route('products.store', [product.id]) : route('products.store');
-        post(productRoute, {
-            data,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        if (product) {
+            post(route('products.update', { product: product.id }), {
+                data,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+        } else {
+  
+            post(route('products.store'), {
+                data,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+        }
     };
 
     return (
@@ -47,7 +56,7 @@ export default function AddEdit({ product }) {
                         <InputLabel htmlFor="name" value="Name" />
                         <TextInput
                             id="name"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
                             required
@@ -60,7 +69,7 @@ export default function AddEdit({ product }) {
                         <TextInput
                             id="price"
                             type="number"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={data.price}
                             onChange={(e) => setData('price', e.target.value)}
                             required
@@ -72,7 +81,7 @@ export default function AddEdit({ product }) {
                         <InputLabel htmlFor="description" value="Description" />
                         <TextInput
                             id="description"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={data.description}
                             onChange={(e) => setData('description', e.target.value)}
                             required
@@ -81,15 +90,21 @@ export default function AddEdit({ product }) {
                     </div>
 
                     <div>
-                        <InputLabel htmlFor="category_id" value="ID Category" />
-                        <TextInput
+                        <InputLabel htmlFor="category_id" value="Category" />
+                        <select
                             id="category_id"
-                            type="number"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={data.category_id}
                             onChange={(e) => setData('category_id', e.target.value)}
                             required
-                        />
+                        >
+                            <option value="">Selectează o categorie</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
                         <InputError className="mt-2" message={errors.category_id} />
                     </div>
 
@@ -106,12 +121,12 @@ export default function AddEdit({ product }) {
                     </div>
 
                     <div className="flex items-center gap-4">
-                    <PrimaryButton
-                                disabled={processing}
-                                className="bg-gray-700 text-white px-4 py-2 hover:bg-gray-800 rounded-md"
-                            >
-                                Save
-                            </PrimaryButton>
+                        <PrimaryButton
+                            disabled={processing}
+                            className="bg-gray-700 text-white px-4 py-2 hover:bg-gray-800 rounded-md"
+                        >
+                            Save
+                        </PrimaryButton>
                     </div>
                 </form>
             </div>

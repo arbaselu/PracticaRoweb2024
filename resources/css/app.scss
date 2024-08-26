@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: cyan #f1f1f1; 
+}
+
+.fixed-size-gallery .image-gallery-slide img {
+    height: 400px; 
+    width: 100%; 
+    object-fit: cover; 
+}
+
+.fixed-size-gallery .image-gallery-content {
+    height: 400px; 
+}

@@ -4,7 +4,7 @@ import InputLabel from "@/Components/InputLabel.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import { Transition } from "@headlessui/react";
+
 
 export default function AddEdit({ category }) {
     const { data, setData, post, errors, processing } = useForm({
@@ -31,7 +31,7 @@ export default function AddEdit({ category }) {
                             <InputLabel htmlFor="name" value="Name" className="text-gray-700 font-medium" />
                             <TextInput
                                 id="name"
-                                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                className="mt-1 text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
                                 required
@@ -45,7 +45,7 @@ export default function AddEdit({ category }) {
                             <TextInput
                                 id="order"
                                 type="number"
-                                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                className="mt-1 text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 value={data.order}
                                 onChange={(e) => setData('order', e.target.value)}
                                 required
